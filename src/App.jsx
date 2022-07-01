@@ -1,9 +1,10 @@
 import React from "react";
+import StartPage from "./pages/StartPage";
 
 function App() {
   return (
-    <div className="App bg-red-700 border-green-200">
-      hello world!
+    <div>
+      <StartPage />
     </div>
   );
 }
