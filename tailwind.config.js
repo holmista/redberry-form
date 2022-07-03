@@ -19,7 +19,7 @@ module.exports = {
         openSans: ["Open Sans"]
       },
       boxShadow: {
-        inputShadow: "inset 0px -1px 0px rgba(0, 0, 0, 0.125);"
+        customShadow: "0 0px 8px 16px rgba(0, 0, 0, 0.15)"
       }
     }
   },

@@ -4,13 +4,14 @@ import PersonalInfoInput from "../components/PersonalInfoInput";
 import BackButton from "../components/BackButton";
 import NextButton from "../components/NextButton";
 import PersonalInfoHeader from "../components/PersonalInfoHeader";
+import InvalidInformationMessage from "../components/InvalidInformationMessage";
 import isValidPeForm from "../utils/isValidPeForm";
 
 export default function PersonalInfoPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [date, setDate] = useState(null);
+  const [date, setDate] = useState("");
   const [errors, setErrors] = useState([]);
 
   const handleNextClick = () => {
@@ -34,8 +35,18 @@ export default function PersonalInfoPage() {
             src="../src/assets/wizard.png"
             alt="wizard"
           />
+          {errors.length > 0 && (
+            <InvalidInformationMessage
+              message={errors[0].message}
+              body={errors[0].body}
+            />
+          )}
         </div>
-        <div className="perosnalInfo font-openSans font-semibold ml-10 mt-[115px]">
+        <div
+          className={`perosnalInfo font-openSans font-semibold ml-10 ${
+            errors.length > 0 ? "mt-[11px]" : "mt-[115px]"
+          }`}
+        >
           <p className="text-[#000000] text-[32px]">Personal information</p>
           <p className="text-[#95939A] text-[14px]">
             This is basic informaton fields
