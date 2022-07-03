@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ImageHeader from "../components/ImageHeader";
 import PersonalInfoInput from "../components/PersonalInfoInput";
 import BackButton from "../components/BackButton";
 import NextButton from "../components/NextButton";
 import PersonalInfoHeader from "../components/PersonalInfoHeader";
 import InvalidInformationMessage from "../components/InvalidInformationMessage";
+import ProgressBar from "../components/ProgressBar";
 import isValidPeForm from "../utils/isValidPeForm";
 
 export default function PersonalInfoPage() {
@@ -13,10 +14,21 @@ export default function PersonalInfoPage() {
   const [phone, setPhone] = useState("");
   const [date, setDate] = useState("");
   const [errors, setErrors] = useState([]);
+  const [status, setStatus] = useState("default");
 
   const handleNextClick = () => {
     setErrors(isValidPeForm({ name, email, phone }));
   };
+
+  useEffect(() => {
+    if (name || email || phone || date) setStatus("active");
+    if (
+      status === "active" &&
+      isValidPeForm({ name, email, phone }).length === 0 &&
+      date
+    )
+      setStatus("success");
+  }, [name, email, phone, date]);
 
   return (
     <div className="flex">
@@ -30,11 +42,7 @@ export default function PersonalInfoPage() {
           <p>Start creating your account</p>
         </div>
         <div className="wizard">
-          <img
-            className="ml-10 mt-[60px]"
-            src="../src/assets/wizard.png"
-            alt="wizard"
-          />
+          <ProgressBar status={status} />
           {errors.length > 0 && (
             <InvalidInformationMessage
               message={errors[0].message}
