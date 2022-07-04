@@ -6,7 +6,13 @@ import NextButton from "../components/NextButton";
 import PersonalInfoHeader from "../components/PersonalInfoHeader";
 import InvalidInformationMessage from "../components/InvalidInformationMessage";
 import ProgressBar from "../components/ProgressBar";
-import isValidPeForm from "../utils/isValidPeForm";
+import {
+  isValidPeForm,
+  isValidName,
+  isValidEmail,
+  isValidPhone,
+  isValidDate
+} from "../utils/isValidPeForm";
 
 export default function PersonalInfoPage() {
   const [name, setName] = useState("");
@@ -15,19 +21,30 @@ export default function PersonalInfoPage() {
   const [date, setDate] = useState("");
   const [errors, setErrors] = useState([]);
   const [status, setStatus] = useState("default");
+  const [showError, setShowError] = useState(false);
+  const [timer, setTimer] = useState(null);
 
   const handleNextClick = () => {
-    setErrors(isValidPeForm({ name, email, phone }));
+    let errors = isValidPeForm({ name, email, phone, date });
+    if (errors.length) setShowError(true);
+    setTimer(
+      setTimeout(() => {
+        setShowError(false);
+      }, 3000)
+    );
+    setErrors(errors);
   };
 
   useEffect(() => {
     if (name || email || phone || date) setStatus("active");
     if (
       status === "active" &&
-      isValidPeForm({ name, email, phone }).length === 0 &&
-      date
+      isValidPeForm({ name, email, phone, date }).length === 0
     )
       setStatus("success");
+    return () => {
+      clearTimeout(timer);
+    };
   }, [name, email, phone, date]);
 
   return (
@@ -43,7 +60,7 @@ export default function PersonalInfoPage() {
         </div>
         <div className="wizard">
           <ProgressBar status={status} />
-          {errors.length > 0 && (
+          {showError === true && (
             <InvalidInformationMessage
               message={errors[0].message}
               body={errors[0].body}
@@ -52,7 +69,7 @@ export default function PersonalInfoPage() {
         </div>
         <div
           className={`perosnalInfo font-openSans font-semibold ml-10 ${
-            errors.length > 0 ? "mt-[11px]" : "mt-[115px]"
+            showError ? "mt-[11px]" : "mt-[115px]"
           }`}
         >
           <p className="text-[#000000] text-[32px]">Personal information</p>
@@ -69,24 +86,28 @@ export default function PersonalInfoPage() {
             type="text"
             set={setName}
             value={name}
+            isValid={isValidName}
           />
           <PersonalInfoInput
             placeholder="Email address *"
             type="text"
             set={setEmail}
             value={email}
+            isValid={isValidEmail}
           />
           <PersonalInfoInput
             placeholder="Phone number *"
             type="text"
             set={setPhone}
             value={phone}
+            isValid={isValidPhone}
           />
           <PersonalInfoInput
             placeholder="Date of birth *"
             type="date"
             set={setDate}
             value={date}
+            isValid={isValidDate}
           />
         </div>
         <div className="buttons flex justify-between w-[775px] mt-[88px] ml-10 ">
