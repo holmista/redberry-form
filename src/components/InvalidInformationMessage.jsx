@@ -1,6 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-export default function InvalidInformationMessage({ message, body }) {
+export default function InvalidInformationMessage({ message, body, show }) {
   return (
     <div
       className="w-[350px] h-[87px] bg-[rgba(255, 255, 255, 0.85)] grid grid-cols-1 divide-y font-openSans
@@ -14,9 +15,9 @@ export default function InvalidInformationMessage({ message, body }) {
         <div className="text-[#DC3545] w-[271px] font-semibold text-sm">
           {message}
         </div>
-        <div className="pl-[14.47px]">
+        <button onClick={() => show(false)} className="pl-[14.47px]" type="button">
           <img src="../src/assets/cross.png" alt="" />
-        </div>
+        </button>
       </div>
       <div className="body h-12 flex items-center font-normal text-[#212529] text-base">
         <div className="pl-3 ">{body}</div>
@@ -24,3 +25,9 @@ export default function InvalidInformationMessage({ message, body }) {
     </div>
   );
 }
+
+InvalidInformationMessage.propTypes = {
+  message: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+  show: PropTypes.func.isRequired,
+};

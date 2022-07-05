@@ -11,37 +11,49 @@ import {
   isValidName,
   isValidEmail,
   isValidPhone,
-  isValidDate
+  isValidDate,
 } from "../utils/isValidPeForm";
 
 export default function PersonalInfoPage() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [date, setDate] = useState("");
+  const [name, setName] = useState(sessionStorage.getItem("name") || "");
+  const [email, setEmail] = useState(sessionStorage.getItem("email") || "");
+  const [phone, setPhone] = useState(sessionStorage.getItem("phone") || "");
+  const [date, setDate] = useState(sessionStorage.getItem("date") || "");
   const [errors, setErrors] = useState([]);
   const [status, setStatus] = useState("default");
   const [showError, setShowError] = useState(false);
   const [timer, setTimer] = useState(null);
 
   const handleNextClick = () => {
-    let errors = isValidPeForm({ name, email, phone, date });
+    const errs = isValidPeForm({
+      name, email, phone, date,
+    });
     if (errors.length) setShowError(true);
     setTimer(
       setTimeout(() => {
         setShowError(false);
-      }, 3000)
+      }, 3000),
     );
-    setErrors(errors);
+    setErrors(errs);
   };
 
   useEffect(() => {
-    if (name || email || phone || date) setStatus("active");
+    console.log(
+      "fired effect",
+    );
+    sessionStorage.setItem("name", name);
+    sessionStorage.setItem("email", email);
+    sessionStorage.setItem("phone", phone);
+    sessionStorage.setItem("date", date);
+    const valid = isValidPeForm({
+      name, email, phone, date,
+    }).length === 0;
     if (
-      status === "active" &&
-      isValidPeForm({ name, email, phone, date }).length === 0
-    )
-      setStatus("success");
+      // status === "active"
+      valid
+    ) { console.log("success form"); setStatus("success"); }
+    if ((name || email || phone || date) && !valid) setStatus("active");
+
     return () => {
       clearTimeout(timer);
     };
@@ -64,6 +76,7 @@ export default function PersonalInfoPage() {
             <InvalidInformationMessage
               message={errors[0].message}
               body={errors[0].body}
+              show={setShowError}
             />
           )}
         </div>
