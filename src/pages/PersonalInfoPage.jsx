@@ -66,7 +66,7 @@ export default function PersonalInfoPage() {
         <PersonalInfoHeader />
         <img src="../src/assets/chessFigures2.png" alt=" chess figures" />
       </div>
-      <div className="info w-[997px] bg-[#F5F5F5]">
+      <div className="info w-[997px]">
         <div className="h-[84px] flex items-center ml-10 font-openSans font-semibold text-base">
           <p>Start creating your account</p>
         </div>
