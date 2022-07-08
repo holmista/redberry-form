@@ -28,7 +28,7 @@ export default function PersonalInfoPage() {
     const errs = isValidPeForm({
       name, email, phone, date,
     });
-    if (errors.length) setShowError(true);
+    if (errs.length) setShowError(true);
     setTimer(
       setTimeout(() => {
         setShowError(false);

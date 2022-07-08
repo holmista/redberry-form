@@ -9,7 +9,9 @@ import CharacterSelect from "../components/CharacterSelect";
 import KnowledgeDropDown from "../components/KnowledgeDropDown";
 import CharacterDropDown from "../components/CharacterDropDown";
 import ExperienceProgressBar from "../components/ExperienceProgressBar";
+import InvalidInformationMessage from "../components/InvalidInformationMessage";
 import { knowledgeContext, characterContext } from "../utils/contexts";
+import isValidExperienceForm from "../utils/isValidExperienceForm";
 
 export default function ExperiencePage() {
   const [showKnowledge, setShowKnowledge] = useState(false);
@@ -20,6 +22,9 @@ export default function ExperiencePage() {
   const [rotateCharacter, setRotateCharacter] = useState("rotate-0");
   const [participated, setParticipated] = useState(sessionStorage.getItem("participated") || null);
   const [status, setStatus] = useState("experienceDefault");
+  const [errors, setErrors] = useState([]);
+  const [showError, setShowError] = useState(false);
+  const [timer, setTimer] = useState(null);
 
   const knowledgeValues = useMemo(
     () => ({ setShowKnowledge, setknowledgeLevel, setRotateKnowledge }),
@@ -31,6 +36,20 @@ export default function ExperiencePage() {
     [showCharacter, character, rotateCharacter],
   );
 
+  const handleNextClick = () => {
+    const errs = isValidExperienceForm({
+      knowledgeLevel, character, participated,
+    });
+    console.log(errs.length);
+    if (errs.length) setShowError(true);
+    setTimer(
+      setTimeout(() => {
+        setShowError(false);
+      }, 3000),
+    );
+    setErrors(errs);
+  };
+
   useEffect(() => {
     sessionStorage.setItem("knowledgeLevel", knowledgeLevel);
     sessionStorage.setItem("character", character);
@@ -41,6 +60,7 @@ export default function ExperiencePage() {
     ) { setStatus("experienceActive"); }
     if ((knowledgeLevel !== "level of knowledge *" || character !== "Choose your character *"
      || participated) && !valid) { setStatus("experienceActive"); }
+    return () => { clearTimeout(timer); };
   }, [knowledgeLevel, character, participated]);
 
   return (
@@ -58,8 +78,15 @@ export default function ExperiencePage() {
         </div>
         <div className="wizard">
           <ExperienceProgressBar status={status} />
+          {showError === true && (
+            <InvalidInformationMessage
+              message={errors[0].message}
+              body={errors[0].body}
+              show={setShowError}
+            />
+          )}
         </div>
-        <div className="ml-10 mt-[115px]">
+        <div className={`ml-10 ${showError ? "mt-[11px]" : "mt-[115px]"}`}>
           <p className="text-[#000000] text-[32px] font-semibold">Chess experience</p>
           <p className="text-[#95939A] text-[14px] font-semibold">
             This is basic informaton fields
@@ -89,18 +116,18 @@ export default function ExperiencePage() {
           <p className="py-2 pl-4 mt-[88px]">Have you participated in the Redberry Championship? *</p>
           <div className="radios flex pl-4">
             <div>
-              <input type="radio" id="Yes" name="champ" checked={participated === "Yes"} onClick={() => setParticipated("Yes")} />
+              <input type="radio" id="Yes" name="champ" checked={participated === "Yes"} onChange={() => setParticipated("Yes")} />
               <label className="pl-[10px]">Yes</label>
             </div>
             <div className="pl-4">
-              <input type="radio" id="No" name="champ" checked={participated === "No"} onClick={() => setParticipated("No")} />
+              <input type="radio" id="No" name="champ" checked={participated === "No"} onChange={() => setParticipated("No")} />
               <label className="pl-[10px]">No</label>
             </div>
           </div>
         </div>
         <div className="buttons flex justify-between w-11/12 max-w-[775px] mt-[88px]  px-[48px]">
           <BackButton />
-          <NextButton onClick={() => {}} />
+          <NextButton onClick={handleNextClick} />
         </div>
       </div>
     </div>
