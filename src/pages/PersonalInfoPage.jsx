@@ -38,9 +38,6 @@ export default function PersonalInfoPage() {
   };
 
   useEffect(() => {
-    console.log(
-      "fired effect",
-    );
     sessionStorage.setItem("name", name);
     sessionStorage.setItem("email", email);
     sessionStorage.setItem("phone", phone);
@@ -49,9 +46,8 @@ export default function PersonalInfoPage() {
       name, email, phone, date,
     }).length === 0;
     if (
-      // status === "active"
       valid
-    ) { console.log("success form"); setStatus("success"); }
+    ) { setStatus("success"); }
     if ((name || email || phone || date) && !valid) setStatus("active");
 
     return () => {

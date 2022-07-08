@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 export default function ProgressBar({ status }) {
   return (
@@ -9,3 +10,7 @@ export default function ProgressBar({ status }) {
     />
   );
 }
+
+ProgressBar.propTypes = {
+  status: PropTypes.string.isRequired,
+};

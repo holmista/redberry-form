@@ -1,13 +1,48 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import ImageHeader from "../components/ImageHeader";
 import ExperienceInfoHeader from "../components/ExperienceInfoHeader";
-import ProgressBar from "../components/ProgressBar";
 import BackButton from "../components/BackButton";
 import NextButton from "../components/NextButton";
 import ExperienceSelect from "../components/ExperienceSelect";
+import CharacterSelect from "../components/CharacterSelect";
+import KnowledgeDropDown from "../components/KnowledgeDropDown";
+import CharacterDropDown from "../components/CharacterDropDown";
+import ExperienceProgressBar from "../components/ExperienceProgressBar";
+import { knowledgeContext, characterContext } from "../utils/contexts";
 
 export default function ExperiencePage() {
+  const [showKnowledge, setShowKnowledge] = useState(false);
+  const [knowledgeLevel, setknowledgeLevel] = useState(sessionStorage.getItem("knowledgeLevel") || "level of knowledge *");
+  const [rotateKnowledge, setRotateKnowledge] = useState("rotate-0");
+  const [showCharacter, setShowCharacter] = useState(false);
+  const [character, setCharacter] = useState(sessionStorage.getItem("character") || "Choose your character *");
+  const [rotateCharacter, setRotateCharacter] = useState("rotate-0");
+  const [participated, setParticipated] = useState(sessionStorage.getItem("participated") || null);
+  const [status, setStatus] = useState("experienceDefault");
+
+  const knowledgeValues = useMemo(
+    () => ({ setShowKnowledge, setknowledgeLevel, setRotateKnowledge }),
+    [showKnowledge, knowledgeLevel, rotateKnowledge],
+  );
+
+  const characterValues = useMemo(
+    () => ({ setShowCharacter, setCharacter, setRotateCharacter }),
+    [showCharacter, character, rotateCharacter],
+  );
+
+  useEffect(() => {
+    sessionStorage.setItem("knowledgeLevel", knowledgeLevel);
+    sessionStorage.setItem("character", character);
+    sessionStorage.setItem("participated", participated);
+    const valid = knowledgeLevel && character && participated;
+    if (
+      valid
+    ) { setStatus("experienceActive"); }
+    if ((knowledgeLevel !== "level of knowledge *" || character !== "Choose your character *"
+     || participated) && !valid) { setStatus("experienceActive"); }
+  }, [knowledgeLevel, character, participated]);
+
   return (
     <div className="h-screen overflow-hidden flex font-openSans">
       <div className="image relative hidden w-[600px] lg:block xl:w-auto overflow-hidden">
@@ -22,7 +57,7 @@ export default function ExperiencePage() {
           <p>First step is done, continue to finish onboarding</p>
         </div>
         <div className="wizard">
-          <ProgressBar status="active" />
+          <ExperienceProgressBar status={status} />
         </div>
         <div className="ml-10 mt-[115px]">
           <p className="text-[#000000] text-[32px] font-semibold">Chess experience</p>
@@ -32,17 +67,33 @@ export default function ExperiencePage() {
         </div>
         <div className="inputs ml-10 mt-[95px]">
           <div className="selections flex flex-wrap gap-[23px]">
-            <ExperienceSelect text="level of knowledge *" />
-            <ExperienceSelect text="Choose your character *" />
+            <div>
+              <knowledgeContext.Provider value={knowledgeValues}>
+                <ExperienceSelect
+                  text={knowledgeLevel}
+                  rotateKnowledge={rotateKnowledge}
+                />
+                {showKnowledge && <KnowledgeDropDown />}
+              </knowledgeContext.Provider>
+            </div>
+            <div>
+              <characterContext.Provider value={characterValues}>
+                <CharacterSelect
+                  text={character}
+                  rotateCharacter={rotateCharacter}
+                />
+                {showCharacter && <CharacterDropDown />}
+              </characterContext.Provider>
+            </div>
           </div>
           <p className="py-2 pl-4 mt-[88px]">Have you participated in the Redberry Championship? *</p>
           <div className="radios flex pl-4">
             <div>
-              <input type="radio" id="Yes" name="champ" />
+              <input type="radio" id="Yes" name="champ" checked={participated === "Yes"} onClick={() => setParticipated("Yes")} />
               <label className="pl-[10px]">Yes</label>
             </div>
             <div className="pl-4">
-              <input type="radio" id="No" name="champ" />
+              <input type="radio" id="No" name="champ" checked={participated === "No"} onClick={() => setParticipated("No")} />
               <label className="pl-[10px]">No</label>
             </div>
           </div>
