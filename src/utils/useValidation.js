@@ -1,5 +1,5 @@
 import { isValidPeForm } from "./isValidPeForm";
-import isValidExperienceForm from "./isValidExperienceForm";
+import { isValidExperienceForm } from "./isValidExperienceForm";
 
 export default function useValidation() {
   const pePageValues = {

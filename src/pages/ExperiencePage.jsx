@@ -12,7 +12,7 @@ import CharacterDropDown from "../components/CharacterDropDown";
 import ExperienceProgressBar from "../components/ExperienceProgressBar";
 import InvalidInformationMessage from "../components/InvalidInformationMessage";
 import { knowledgeContext, characterContext } from "../utils/contexts";
-import isValidExperienceForm from "../utils/isValidExperienceForm";
+import { isValidExperienceForm, isValidCharacter, isValidKnowledgeLevel } from "../utils/isValidExperienceForm";
 
 export default function ExperiencePage() {
   const [showKnowledge, setShowKnowledge] = useState(false);
@@ -26,6 +26,8 @@ export default function ExperiencePage() {
   const [errors, setErrors] = useState([]);
   const [showError, setShowError] = useState(false);
   const [timer, setTimer] = useState(null);
+  const [knowledgeBg, setKnowledgeBg] = useState("bg-[#FFFFFF]");
+  const [characterBg, setCharacterBg] = useState("bg-[#FFFFFF]");
 
   const navigate = useNavigate();
 
@@ -40,6 +42,14 @@ export default function ExperiencePage() {
   );
 
   const handleNextClick = () => {
+    if (isValidKnowledgeLevel(knowledgeLevel).message === "valid") setKnowledgeBg("bg-[#FFFFFF]");
+    else setKnowledgeBg("bg-[#FFEFEF]");
+
+    if (isValidCharacter(character).message === "valid") setCharacterBg("bg-[#FFFFFF]");
+    else setCharacterBg("bg-[#FFEFEF]");
+
+    console.log(isValidKnowledgeLevel(knowledgeLevel).message);
+
     const errs = isValidExperienceForm({
       knowledgeLevel, character, participated,
     });
@@ -57,6 +67,8 @@ export default function ExperiencePage() {
   };
 
   useEffect(() => {
+    // setCharacterBg("bg-[#FFFFFF]");
+    // setKnowledgeBg("bg-[#FFFFFF]");
     sessionStorage.setItem("knowledgeLevel", knowledgeLevel);
     sessionStorage.setItem("character", character);
     sessionStorage.setItem("participated", participated);
@@ -105,6 +117,7 @@ export default function ExperiencePage() {
                 <ExperienceSelect
                   text={knowledgeLevel}
                   rotateKnowledge={rotateKnowledge}
+                  bg={knowledgeBg}
                 />
                 {showKnowledge && <KnowledgeDropDown />}
               </knowledgeContext.Provider>
@@ -114,6 +127,7 @@ export default function ExperiencePage() {
                 <CharacterSelect
                   text={character}
                   rotateCharacter={rotateCharacter}
+                  bg={characterBg}
                 />
                 {showCharacter && <CharacterDropDown />}
               </characterContext.Provider>

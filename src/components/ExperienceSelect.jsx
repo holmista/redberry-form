@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { knowledgeContext } from "../utils/contexts";
 
-export default function ExperienceSelect({ text, rotateKnowledge }) {
+export default function ExperienceSelect({ text, rotateKnowledge, bg }) {
   const context = useContext(knowledgeContext);
   const { setShowKnowledge } = context;
   const { setRotateKnowledge } = context;
@@ -12,7 +12,7 @@ export default function ExperienceSelect({ text, rotateKnowledge }) {
   };
 
   return (
-    <div className="input flex items-center justify-between bg-[#FFFFFF] w-[392px] h-[46px] border-b-2 rounded outline-none">
+    <div className={`input flex items-center justify-between ${bg} w-[392px] h-[46px] border-b-2 rounded outline-none`}>
       <p className="py-2 pl-4">{text}</p>
       <button onClick={handleClick} type="button" className="pr-[19px] py-[19px]">
         <img src="../src/assets/dropdown.png" alt="" className={`${rotateKnowledge} transition-all duration-500`} />
@@ -24,4 +24,5 @@ export default function ExperienceSelect({ text, rotateKnowledge }) {
 ExperienceSelect.propTypes = {
   text: PropTypes.string.isRequired,
   rotateKnowledge: PropTypes.string.isRequired,
+  bg: PropTypes.string.isRequired,
 };
