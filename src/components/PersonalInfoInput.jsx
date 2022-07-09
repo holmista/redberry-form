@@ -22,7 +22,7 @@ export default function PersonalInfoInput({
     return (
       <div
         className="bg-[#F5F5F5] px-4 py-2 border-b-2 rounded outline-none flex
-      justify-between"
+      justify-between items-center"
       >
         <input
           className="bg-[#F5F5F5] outline-none w-[743px]"
@@ -31,24 +31,40 @@ export default function PersonalInfoInput({
           onChange={handleChange}
           value={value}
         />
-        <img
-          className="pl-[3px]"
-          src="../src/assets/inputCheckbox.png"
-          alt=""
-        />
+        <div className="">
+          <img
+            className="pl-[3px]"
+            src="../src/assets/inputCheckbox.png"
+            alt=""
+          />
+        </div>
       </div>
     );
   }
 
   return (
+
     <div className={`${bg} px-4 py-2 border-b-2 rounded outline-none`}>
-      <input
-        className={`${bg} outline-none w-full`}
-        type={type}
-        placeholder={placeholder}
-        onChange={handleChange}
-        value={value}
-      />
+      {type === "date"
+        ? (
+          <input
+            className={`${bg} outline-none w-full`}
+            type="text"
+            onFocus={(e) => { e.target.type = "date"; }}
+            placeholder={placeholder}
+            onChange={handleChange}
+            value={value}
+          />
+        ) : (
+          <input
+            className={`${bg} outline-none w-full`}
+            type={type}
+            placeholder={placeholder}
+            onChange={handleChange}
+            value={value}
+          />
+        )}
+
     </div>
   );
 }
