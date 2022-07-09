@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 
 export default function PersonalInfoInput({
   placeholder,
   type,
   set,
   value,
-  isValid
+  isValid,
 }) {
   const [bg, setBg] = useState("bg-[#F5F5F5]");
   const handleChange = (e) => {
@@ -42,7 +43,7 @@ export default function PersonalInfoInput({
   return (
     <div className={`${bg} px-4 py-2 border-b-2 rounded outline-none`}>
       <input
-        className={`${bg} outline-none  w-[743px]`}
+        className={`${bg} outline-none w-full`}
         type={type}
         placeholder={placeholder}
         onChange={handleChange}
@@ -51,3 +52,11 @@ export default function PersonalInfoInput({
     </div>
   );
 }
+
+PersonalInfoInput.propTypes = {
+  placeholder: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  set: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  isValid: PropTypes.func.isRequired,
+};

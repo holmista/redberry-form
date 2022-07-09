@@ -10,7 +10,7 @@ const isValidCharacter = (character) => {
 
 const isValidParticipated = (participated) => {
   if (participated) return { message: "valid" };
-  return { message: "valid", body: "please select participation status" };
+  return { message: "invalid selection", body: "please select participation status" };
 };
 
 export default function isValidExperienceForm(inputs) {

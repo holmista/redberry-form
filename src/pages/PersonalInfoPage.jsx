@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import ImageHeader from "../components/ImageHeader";
 import PersonalInfoInput from "../components/PersonalInfoInput";
 import BackButton from "../components/BackButton";
@@ -24,17 +25,23 @@ export default function PersonalInfoPage() {
   const [showError, setShowError] = useState(false);
   const [timer, setTimer] = useState(null);
 
+  const navigate = useNavigate();
+
   const handleNextClick = () => {
     const errs = isValidPeForm({
       name, email, phone, date,
     });
-    if (errs.length) setShowError(true);
-    setTimer(
-      setTimeout(() => {
-        setShowError(false);
-      }, 3000),
-    );
-    setErrors(errs);
+    if (errs.length) {
+      setShowError(true);
+      setTimer(
+        setTimeout(() => {
+          setShowError(false);
+        }, 3000),
+      );
+      setErrors(errs);
+    } else {
+      navigate("/experienceInfo");
+    }
   };
 
   useEffect(() => {
@@ -56,30 +63,30 @@ export default function PersonalInfoPage() {
   }, [name, email, phone, date]);
 
   return (
-    <div className="flex">
-      <div className="image relative">
+    <div className="h-screen overflow-y-hidden flex font-openSans">
+      <div className="image relative hidden w-[600px] lg:block xl:w-auto overflow-hidden">
         <ImageHeader />
         <PersonalInfoHeader />
-        <img src="../src/assets/chessFigures2.png" alt=" chess figures" />
+        <div className="w-[923px]">
+          <img src="../src/assets/chessFigures2.png" alt=" chess figures" />
+        </div>
       </div>
-      <div className="info w-[997px]">
+      <div className="info w-[997px] relative">
         <div className="h-[84px] flex items-center ml-10 font-openSans font-semibold text-base">
           <p>Start creating your account</p>
         </div>
         <div className="wizard">
           <ProgressBar status={status} />
-          {showError === true && (
-            <InvalidInformationMessage
-              message={errors[0].message}
-              body={errors[0].body}
-              show={setShowError}
-            />
-          )}
         </div>
+        {showError === true && (
+        <InvalidInformationMessage
+          message={errors[0].message}
+          body={errors[0].body}
+          show={setShowError}
+        />
+        )}
         <div
-          className={`perosnalInfo font-openSans font-semibold ml-10 ${
-            showError ? "mt-[11px]" : "mt-[115px]"
-          }`}
+          className="perosnalInfo font-openSans font-semibold ml-10 mt-[115px]"
         >
           <p className="text-[#000000] text-[32px]">Personal information</p>
           <p className="text-[#95939A] text-[14px]">
@@ -87,7 +94,7 @@ export default function PersonalInfoPage() {
           </p>
         </div>
         <div
-          className="input ml-10 mt-[85px] flex flex-col w-[775px] gap-y-10
+          className="input ml-10 mt-[85px] flex flex-col w-11/12 max-w-[775px] gap-y-10
          text-openSans text-base font-normal text-[#212529] bg-[#F5F5F5]"
         >
           <PersonalInfoInput
@@ -119,8 +126,8 @@ export default function PersonalInfoPage() {
             isValid={isValidDate}
           />
         </div>
-        <div className="buttons flex justify-between w-[775px] mt-[88px] ml-10 ">
-          <BackButton />
+        <div className="buttons flex justify-between w-11/12 max-w-[775px] mt-[88px]  px-[48px]">
+          <BackButton link="/" />
           <NextButton onClick={handleNextClick} />
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-export default function NextButton({ link, onClick }) {
+export default function NextButton({ onClick, text }) {
   return (
     <button
       className="bg-myBlack w-32 h-[53px] rounded-lg font-openSans text-[#ffffff] font-normal text-twenty
@@ -9,8 +10,17 @@ export default function NextButton({ link, onClick }) {
       type="button"
       onClick={onClick}
     >
-      <span>Next</span>
-      <img src="../src/assets/buttonArrow.png" alt="" />
+      <span>{text}</span>
+      {text === "Next" && <img src="../src/assets/buttonArrow.png" alt="" />}
     </button>
   );
 }
+
+NextButton.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  text: PropTypes.string,
+};
+
+NextButton.defaultProps = {
+  text: "Next",
+};

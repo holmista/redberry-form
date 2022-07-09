@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useMemo, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import ImageHeader from "../components/ImageHeader";
 import ExperienceInfoHeader from "../components/ExperienceInfoHeader";
 import BackButton from "../components/BackButton";
@@ -26,6 +27,8 @@ export default function ExperiencePage() {
   const [showError, setShowError] = useState(false);
   const [timer, setTimer] = useState(null);
 
+  const navigate = useNavigate();
+
   const knowledgeValues = useMemo(
     () => ({ setShowKnowledge, setknowledgeLevel, setRotateKnowledge }),
     [showKnowledge, knowledgeLevel, rotateKnowledge],
@@ -40,14 +43,17 @@ export default function ExperiencePage() {
     const errs = isValidExperienceForm({
       knowledgeLevel, character, participated,
     });
-    console.log(errs.length);
-    if (errs.length) setShowError(true);
-    setTimer(
-      setTimeout(() => {
-        setShowError(false);
-      }, 3000),
-    );
-    setErrors(errs);
+    if (errs.length) {
+      setShowError(true);
+      setTimer(
+        setTimeout(() => {
+          setShowError(false);
+        }, 3000),
+      );
+      setErrors(errs);
+    } else {
+      navigate("/completed");
+    }
   };
 
   useEffect(() => {
@@ -72,21 +78,21 @@ export default function ExperiencePage() {
           <img src="../src/assets/chessFigures3.png" alt=" chess figures" />
         </div>
       </div>
-      <div className="info w-[997px]">
+      <div className="info w-[997px] relative">
         <div className="h-[84px] flex items-center ml-10 font-openSans font-semibold text-base">
           <p>First step is done, continue to finish onboarding</p>
         </div>
         <div className="wizard">
           <ExperienceProgressBar status={status} />
-          {showError === true && (
-            <InvalidInformationMessage
-              message={errors[0].message}
-              body={errors[0].body}
-              show={setShowError}
-            />
-          )}
         </div>
-        <div className={`ml-10 ${showError ? "mt-[11px]" : "mt-[115px]"}`}>
+        {showError === true && (
+        <InvalidInformationMessage
+          message={errors[0].message}
+          body={errors[0].body}
+          show={setShowError}
+        />
+        )}
+        <div className="ml-10 mt-[115px]">
           <p className="text-[#000000] text-[32px] font-semibold">Chess experience</p>
           <p className="text-[#95939A] text-[14px] font-semibold">
             This is basic informaton fields
@@ -126,8 +132,8 @@ export default function ExperiencePage() {
           </div>
         </div>
         <div className="buttons flex justify-between w-11/12 max-w-[775px] mt-[88px]  px-[48px]">
-          <BackButton />
-          <NextButton onClick={handleNextClick} />
+          <BackButton link="/personalInfo" />
+          <NextButton onClick={handleNextClick} text="Done" />
         </div>
       </div>
     </div>

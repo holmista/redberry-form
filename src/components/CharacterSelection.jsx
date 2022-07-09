@@ -12,7 +12,7 @@ export default function CharacterSelection({ name, url }) {
   };
 
   return (
-    <div className="flex justify-between mt-4 items-center cursor-pointer" onClick={handleClick}>
+    <div className="flex justify-between mt-4 items-center cursor-pointer hover:bg-[#F7F7F9]" onClick={handleClick}>
       <p className="font-normal text-twenty pl-[28px]">
         {name}
       </p>

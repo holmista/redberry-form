@@ -4,7 +4,7 @@ import BlackButton from "../components/BlackButton";
 
 export default function StartPage() {
   return (
-    <div className="flex">
+    <div className="flex overflow-hidden h-screen">
       <div>
         <ImageHeader />
         <img

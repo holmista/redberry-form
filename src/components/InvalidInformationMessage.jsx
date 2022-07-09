@@ -6,7 +6,7 @@ export default function InvalidInformationMessage({ message, body, show }) {
     <div
       className="w-[350px] h-[87px] bg-[rgba(255, 255, 255, 0.85)] grid grid-cols-1 divide-y font-openSans
     border-solid border-[1px] border-[rgba(0, 0, 0, 0.1)] rounded shadow-xl
-    mt-3.5 ml-[608px]"
+    mt-3.5  right-[39px] absolute"
     >
       <div className="message flex flex-row items-center">
         <div className="pl-3 pr-2 py-[9.5px]">
