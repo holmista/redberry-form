@@ -1,6 +1,7 @@
 import React from "react";
 import ImageHeader from "../components/ImageHeader";
 import BlackButton from "../components/BlackButton";
+import landingUrl from "../assets/Landing page- scrolling photo.png";
 
 export default function StartPage() {
   return (
@@ -9,7 +10,7 @@ export default function StartPage() {
         <ImageHeader />
         <div className="w-[923px]">
           <img
-            src="../src/assets/Landing page- scrolling photo.png"
+            src={landingUrl}
             alt="chess figure"
           />
         </div>

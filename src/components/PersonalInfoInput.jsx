@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import inputCheckboxUrl from "../assets/inputCheckbox.png";
 
 export default function PersonalInfoInput({
   placeholder,
@@ -34,7 +35,7 @@ export default function PersonalInfoInput({
         <div className="">
           <img
             className="pl-[3px]"
-            src="../src/assets/inputCheckbox.png"
+            src={inputCheckboxUrl}
             alt=""
           />
         </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import buttonArrowUrl from "../assets/buttonArrow.png";
 
 export default function NextButton({ onClick, text }) {
   return (
@@ -11,7 +12,7 @@ export default function NextButton({ onClick, text }) {
       onClick={onClick}
     >
       <span>{text}</span>
-      {text === "Next" && <img src="../src/assets/buttonArrow.png" alt="" />}
+      {text === "Next" && <img src={buttonArrowUrl} alt="" />}
     </button>
   );
 }

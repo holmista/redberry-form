@@ -7,6 +7,7 @@ import NextButton from "../components/NextButton";
 import PersonalInfoHeader from "../components/PersonalInfoHeader";
 import InvalidInformationMessage from "../components/InvalidInformationMessage";
 import ProgressBar from "../components/ProgressBar";
+import chessFigures2Url from "../assets/chessFigures2.png";
 import {
   isValidPeForm,
   isValidName,
@@ -68,7 +69,7 @@ export default function PersonalInfoPage() {
         <ImageHeader />
         <PersonalInfoHeader />
         <div className="w-[923px]">
-          <img src="../src/assets/chessFigures2.png" alt=" chess figures" />
+          <img src={chessFigures2Url} alt=" chess figures" />
         </div>
       </div>
       <div className="info w-[997px] relative">

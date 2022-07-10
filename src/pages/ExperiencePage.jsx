@@ -13,6 +13,7 @@ import ExperienceProgressBar from "../components/ExperienceProgressBar";
 import InvalidInformationMessage from "../components/InvalidInformationMessage";
 import { knowledgeContext, characterContext } from "../utils/contexts";
 import { isValidExperienceForm, isValidCharacter, isValidKnowledgeLevel } from "../utils/isValidExperienceForm";
+import chessFigures3Url from "../assets/chessFigures3.png";
 import post from "../utils/post";
 
 export default function ExperiencePage() {
@@ -89,7 +90,7 @@ export default function ExperiencePage() {
         <ImageHeader />
         <ExperienceInfoHeader />
         <div className="w-[923px]">
-          <img src="../src/assets/chessFigures3.png" alt=" chess figures" />
+          <img src={chessFigures3Url} alt=" chess figures" />
         </div>
       </div>
       <div className="info w-[997px] relative">

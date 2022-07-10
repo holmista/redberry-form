@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import alertUrl from "../assets/alert.png";
+import crossUrl from "../assets/cross.png";
 
 export default function InvalidInformationMessage({ message, body, show }) {
   return (
@@ -10,13 +12,13 @@ export default function InvalidInformationMessage({ message, body, show }) {
     >
       <div className="message flex flex-row items-center">
         <div className="pl-3 pr-2 py-[9.5px]">
-          <img src="../src/assets/alert.png" alt="" />
+          <img src={alertUrl} alt="" />
         </div>
         <div className="text-[#DC3545] w-[271px] font-semibold text-sm">
           {message}
         </div>
         <button onClick={() => show(false)} className="pl-[14.47px]" type="button">
-          <img src="../src/assets/cross.png" alt="" />
+          <img src={crossUrl} alt="" />
         </button>
       </div>
       <div className="body h-12 flex items-center font-normal text-[#212529] text-base">

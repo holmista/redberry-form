@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import buttonArrowUrl from "../assets/buttonArrow.png";
 
 export default function BlackButton({ text, link }) {
   return (
@@ -11,7 +12,7 @@ export default function BlackButton({ text, link }) {
         type="button"
       >
         <span>{text}</span>
-        <img src="../src/assets/buttonArrow.png" alt="" />
+        <img src={buttonArrowUrl} alt="" />
       </button>
     </Link>
   );
