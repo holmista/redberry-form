@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ImageHeader from "../components/ImageHeader";
 
 export default function CompletedPage() {
+  useEffect(() => {
+    sessionStorage.clear();
+  }, []);
   return (
     <div className="h-screen overflow-hidden flex font-openSans">
       <div className="image relative hidden w-[600px] lg:block xl:w-auto overflow-hidden">

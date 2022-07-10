@@ -2,13 +2,14 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { characterContext } from "../utils/contexts";
 
-export default function CharacterSelection({ name, url }) {
+export default function CharacterSelection({ name, url, id }) {
   const { setShowCharacter, setCharacter, setRotateCharacter } = useContext(characterContext);
 
   const handleClick = () => {
     setCharacter(name);
     setRotateCharacter((prev) => (prev === "rotate-180" ? "rotate-0" : "rotate-180"));
     setShowCharacter(false);
+    sessionStorage.setItem("character_id", id);
   };
 
   return (
@@ -26,4 +27,5 @@ export default function CharacterSelection({ name, url }) {
 CharacterSelection.propTypes = {
   name: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
 };

@@ -5,4 +5,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+    .scrollbar::-webkit-scrollbar {
+      width: 4px;
+      height: 72px;
+    }
+  
+    .scrollbar::-webkit-scrollbar-track {
+      border-radius: 100vh;
+      background: #E9ECEF;
+    }
+  
+    .scrollbar::-webkit-scrollbar-thumb {
+      background: #CBCFD2;
+      border-radius: 100vh;
+    }
+  }
+
 

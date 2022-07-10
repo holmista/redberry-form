@@ -5,13 +5,14 @@ import BlackButton from "../components/BlackButton";
 export default function StartPage() {
   return (
     <div className="flex overflow-hidden h-screen">
-      <div>
+      <div className="image relative hidden w-[600px] lg:block xl:w-auto overflow-hidden">
         <ImageHeader />
-        <img
-          className="w-[923px] h-[1196px] top-[84px] left-0"
-          src="../src/assets/Landing page- scrolling photo.png"
-          alt="chess figure"
-        />
+        <div className="w-[923px]">
+          <img
+            src="../src/assets/Landing page- scrolling photo.png"
+            alt="chess figure"
+          />
+        </div>
       </div>
       <div className="bg-myOrange w-[997px] h-[1280px]">
         <h1 className="text-eighty font-nunito text-[#ffffff] font-black ml-[85px] mt-[265px] h-[256px]">
@@ -21,9 +22,13 @@ export default function StartPage() {
               A LOT ABOUT
             </span>
           </div>
-          WHO WE ARE
+          <div>
+            <span>WHO WE ARE</span>
+          </div>
         </h1>
-        <BlackButton text="Get Started" link="/personalInfo" />
+        <div>
+          <BlackButton text="Get Started" link="/personalInfo" />
+        </div>
       </div>
     </div>
   );

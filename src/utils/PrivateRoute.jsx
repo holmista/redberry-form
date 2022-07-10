@@ -4,7 +4,7 @@ import useValidation from "./useValidation";
 
 export default function PrivateRoute() {
   const location = useLocation();
-  console.log(location.pathname);
+  // console.log(location.pathname);
   const validation = useValidation();
   if (location.pathname === "/experienceInfo") {
     return (
@@ -12,6 +12,6 @@ export default function PrivateRoute() {
     );
   }
   return (
-    (validation.peValid && validation.expValid) ? <Outlet /> : <Navigate to="/personalInfo" />
+    (validation.peValid && validation.expValid) ? <Outlet /> : <Navigate to="/" />
   );
 }

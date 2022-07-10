@@ -13,6 +13,7 @@ import ExperienceProgressBar from "../components/ExperienceProgressBar";
 import InvalidInformationMessage from "../components/InvalidInformationMessage";
 import { knowledgeContext, characterContext } from "../utils/contexts";
 import { isValidExperienceForm, isValidCharacter, isValidKnowledgeLevel } from "../utils/isValidExperienceForm";
+import post from "../utils/post";
 
 export default function ExperiencePage() {
   const [showKnowledge, setShowKnowledge] = useState(false);
@@ -41,14 +42,14 @@ export default function ExperiencePage() {
     [showCharacter, character, rotateCharacter],
   );
 
-  const handleNextClick = () => {
+  const handleNextClick = async () => {
     if (isValidKnowledgeLevel(knowledgeLevel).message === "valid") setKnowledgeBg("bg-[#FFFFFF]");
     else setKnowledgeBg("bg-[#FFEFEF]");
 
     if (isValidCharacter(character).message === "valid") setCharacterBg("bg-[#FFFFFF]");
     else setCharacterBg("bg-[#FFEFEF]");
 
-    console.log(isValidKnowledgeLevel(knowledgeLevel).message);
+    // console.log(isValidKnowledgeLevel(knowledgeLevel).message);
 
     const errs = isValidExperienceForm({
       knowledgeLevel, character, participated,
@@ -62,13 +63,14 @@ export default function ExperiencePage() {
       );
       setErrors(errs);
     } else {
-      navigate("/completed");
+      const res = await post("https://chess-tournament-api.devtest.ge/api/register");
+      if (res === "success") {
+        navigate("/completed");
+      }
     }
   };
 
   useEffect(() => {
-    // setCharacterBg("bg-[#FFFFFF]");
-    // setKnowledgeBg("bg-[#FFFFFF]");
     sessionStorage.setItem("knowledgeLevel", knowledgeLevel);
     sessionStorage.setItem("character", character);
     sessionStorage.setItem("participated", participated);
