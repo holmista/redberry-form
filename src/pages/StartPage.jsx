@@ -18,13 +18,13 @@ export default function StartPage() {
       <div className="bg-myOrange w-[997px] h-[1280px]">
         <h1 className="text-eighty font-nunito text-[#ffffff] font-black ml-[85px] mt-[265px] h-[256px]">
           <div className="flex items-center mb-[16px]">
-            <span>CHESS SAYS</span>
+            <span className="md:text-eighty text-6xl font-extrabold">CHESS SAYS</span>
             <span className="text-twenty text-myBlack font-bold ml-[26px]">
               A LOT ABOUT
             </span>
           </div>
           <div>
-            <span>WHO WE ARE</span>
+            <span className="md:text-eighty text-6xl font-extrabold">WHO WE ARE</span>
           </div>
         </h1>
         <div>
