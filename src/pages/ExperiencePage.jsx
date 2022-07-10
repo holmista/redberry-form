@@ -148,7 +148,7 @@ export default function ExperiencePage() {
             </div>
           </div>
         </div>
-        <div className="buttons flex justify-between w-11/12 max-w-[775px] mt-[88px]  px-[48px]">
+        <div className="buttons flex justify-between w-[807px] mt-[88px]  ml-[48px]">
           <BackButton link="/personalInfo" />
           <NextButton onClick={handleNextClick} text="Done" />
         </div>

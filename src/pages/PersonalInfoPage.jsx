@@ -127,7 +127,7 @@ export default function PersonalInfoPage() {
             isValid={isValidDate}
           />
         </div>
-        <div className="buttons flex justify-between w-11/12 max-w-[775px] mt-[88px]  px-[48px]">
+        <div className="buttons flex justify-between w-[775px] mt-[88px] ml-12">
           <BackButton link="/" />
           <NextButton onClick={handleNextClick} />
         </div>
